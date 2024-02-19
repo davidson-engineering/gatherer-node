@@ -5,7 +5,7 @@ services:
             context: .
         ports:
         - "50000:50000/tcp"
-        image: metrics-agent:latest
+        image: gatherer-node:latest
         container_name: gatherer-node
         working_dir: /app
         restart: unless-stopped

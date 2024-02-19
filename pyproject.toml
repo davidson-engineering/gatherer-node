@@ -25,7 +25,8 @@ classifiers = [
 
 dependencies = [
    "data-node-network @ git+https://github.com/davidson-engineering/data-node-network.git",
-   "tomli >= 2.0.1"
+   "tomli >= 2.0.1",
+   "python-dotenv >= 1.0.1",
 ]
 
 [tool.setuptools]
