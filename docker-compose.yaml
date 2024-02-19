@@ -3,18 +3,18 @@ services:
     gatherer-node:
         build:
             context: .
-        ports:
-        - "50000:50000/tcp"
+        # ports:
+        # - "50000:50000/tcp"
         image: gatherer-node:latest
         container_name: gatherer-node
         working_dir: /app
-        restart: unless-stopped
         command: [ "python", "start_node_server.py" ]
         # user: "1001"
         volumes:
         - ./logs:/app/logs
         - ./config:/app/config
         - /etc/localtime:/etc/localtime:ro # sync timezone with host machine
+        restart: unless-stopped
         network_mode: "host"
 
     promtail:
@@ -24,8 +24,8 @@ services:
         - /var/log:/var/log
         - ./config:/etc/promtail:ro
         command: -config.file=/etc/promtail/promtail.yaml
-        network_mode: "host"
         restart: unless-stopped
+        network_mode: "host"
 
     telegraf:
         image: telegraf:latest
@@ -40,16 +40,17 @@ services:
         network_mode: "host"
 
 
-    portainer_agent:
-        # Use the portainer/agent Docker image
-        image: portainer/agent:latest
-        container_name: portainer_agent
-        volumes:
-        # Mount the host's Docker socket into the container
-        - /var/run/docker.sock:/var/run/docker.sock
-        # Mount the host's Docker volumes into the container
-        - /var/lib/docker/volumes:/var/lib/docker/volumes
-        restart: unless-stopped
-        ports:
-        - "9001:9001"
+    # portainer_agent:
+    #     # Use the portainer/agent Docker image
+    #     image: portainer/agent:latest
+    #     container_name: portainer_agent
+    #     volumes:
+    #     # Mount the host's Docker socket into the container
+    #     - /var/run/docker.sock:/var/run/docker.sock
+    #     # Mount the host's Docker volumes into the container
+    #     - /var/lib/docker/volumes:/var/lib/docker/volumes
+    #     restart: unless-stopped
+    #     # ports:
+    #     # - "9001:9001"
+    #     network_mode: "host"
           
