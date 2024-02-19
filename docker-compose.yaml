@@ -4,7 +4,7 @@ services:
         build:
             context: .
         ports:
-        - "${HOSTNAME}:50000:50000/tcp"
+        - "${HOSTNAME}:${PORT}:${PORT}/tcp"
         image: gatherer-node:latest
         container_name: gatherer-node
         working_dir: /app
