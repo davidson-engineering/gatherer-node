@@ -5,6 +5,7 @@ services:
             context: .
         ports:
         - "${HOSTNAME}:${PORT}:${PORT}/tcp"
+        - "${HOSTNAME}:8000:8000/tcp" # for prometheus
         image: gatherer-node:latest
         container_name: gatherer-node
         working_dir: /app
