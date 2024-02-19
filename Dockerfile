@@ -7,6 +7,8 @@ ENV PYTHONDONTWRITEBYTECODE=1
 # Turns off buffering for easier container logging
 ENV PYTHONUNBUFFERED=1
 
+# Install git
+RUN apk add --no-cache git
 # Update pip
 RUN python -m pip install --upgrade pip
 
