@@ -3,8 +3,8 @@ services:
     gatherer-node:
         build:
             context: .
-        # ports:
-        # - "50000:50000/tcp"
+        ports:
+        - "${HOSTNAME}:50000:50000/tcp"
         image: gatherer-node:latest
         container_name: gatherer-node
         working_dir: /app
@@ -15,7 +15,6 @@ services:
         - ./config:/app/config
         - /etc/localtime:/etc/localtime:ro # sync timezone with host machine
         restart: unless-stopped
-        network_mode: "host"
 
     promtail:
         image: grafana/promtail:latest
@@ -23,9 +22,10 @@ services:
         volumes:
         - /var/log:/var/log
         - ./config:/etc/promtail:ro
-        command: -config.file=/etc/promtail/promtail.yaml
+        command: 
+        - "-config.expand-env=true"
+        - "-config.file=/etc/promtail/promtail.yaml"
         restart: unless-stopped
-        network_mode: "host"
 
     telegraf:
         image: telegraf:latest
@@ -37,8 +37,6 @@ services:
         env_file:
         - .env
         restart: unless-stopped
-        network_mode: "host"
-
 
     # portainer_agent:
     #     # Use the portainer/agent Docker image
