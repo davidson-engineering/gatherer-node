@@ -1,0 +1,57 @@
+[project]
+name = "gatherer-node"
+description = "A_short_description"
+version = "0.0.1"
+
+readme = "README.md"
+requires-python = ">=3.9"
+license = {file = "LICENSE"}
+authors = [
+  {email = "matthew@davidson.engineering"},
+  {name = "Matthew Davidson"}
+]
+
+classifiers = [
+    "Development Status :: 1 - Planning",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS :: MacOS X",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+   "data-node-network @ git+https://github.com/davidson-engineering/data-node-network.git",
+]
+
+[tool.setuptools]
+py-modules = []
+
+[project.optional-dependencies]
+test = [
+  "pytest >= 8.0.0",
+]
+
+[project.urls]
+# homepage = "https://example.com"
+# documentation = "https://readthedocs.org"
+repository = "https://github.com/davidson-engineering/gatherer-node.git"
+# changelog = "https://github.com/me/spam/blob/master/CHANGELOG.md"
+
+# [project.scripts]
+# spam-cli = "spam:main_cli"
+
+# [project.gui-scripts]
+# spam-gui = "spam:main_gui"
+
+# [project.entry-points."spam.magical"]
+# tomatoes = "spam:main_tomatoes"
+
+[tool.pytest.ini_options]
+log_cli = true
+log_cli_level = "INFO"
+log_cli_format = "%(asctime)s [%(levelname)8s] %(message)s (%(filename)s:%(lineno)s)"
+log_cli_date_format = "%Y-%m-%d %H:%M:%S"
