@@ -37,6 +37,8 @@ services:
         env_file:
         - .env
         restart: unless-stopped
+        network_mode: "host"
+
 
     portainer_agent:
         # Use the portainer/agent Docker image
