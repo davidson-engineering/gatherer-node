@@ -6,7 +6,7 @@ services:
         ports:
         - "50000:50000/tcp"
         image: metrics-agent:latest
-        container_name: metrics-agent
+        container_name: gatherer-node
         working_dir: /app
         restart: unless-stopped
         command: [ "python", "start_node_server.py" ]
@@ -19,6 +19,7 @@ services:
 
     promtail:
         image: grafana/promtail:latest
+        container_name: promtail
         volumes:
         - /var/log:/var/log
         - ./config:/etc/promtail:ro
@@ -28,6 +29,7 @@ services:
 
     telegraf:
         image: telegraf:latest
+        container_name: telegraf
         volumes:
         # Mount for telegraf config
         - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
@@ -39,6 +41,7 @@ services:
     portainer_agent:
         # Use the portainer/agent Docker image
         image: portainer/agent:latest
+        container_name: portainer_agent
         volumes:
         # Mount the host's Docker socket into the container
         - /var/run/docker.sock:/var/run/docker.sock
