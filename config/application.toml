@@ -1,8 +1,8 @@
 [node_network]
 read_limit = 1_000 # Security feature
 
-[node_network.node_server]
+[node_network.server]
 prometheus_port = 8_000
 
-[node_network.node_client]
+[node_network.client]
 prometheus_port = 8_000

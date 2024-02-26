@@ -34,12 +34,12 @@ formatters:
     format: '%(asctime)s %(levelname)s %(message)s'
 
 loggers:
-  data_node_network.node_server:
+  data_node_network.server:
     level: DEBUG
     handlers:
       - console
       - node_server_file
-  data_node_network.node_client:
+  data_node_network.client:
     level: DEBUG
     handlers:
       - console
