@@ -4,18 +4,18 @@ services:
         build:
             context: .
         ports:
-        - "${HOSTNAME}:${PORT}:${PORT}/tcp"
         - "${HOSTNAME}:8000:8000/tcp" # for prometheus
         image: gatherer-node:latest
         container_name: gatherer-node
         working_dir: /app
-        command: [ "python", "start_node_server.py" ]
+        command: [ "python", "start_node.py" ]
         # user: "1001"
         volumes:
         - ./logs:/app/logs
         - ./config:/app/config
         - /etc/localtime:/etc/localtime:ro # sync timezone with host machine
         restart: unless-stopped
+
 
     promtail:
         image: grafana/promtail:latest
@@ -35,8 +35,6 @@ services:
         # Mount for telegraf config
         - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
         - /etc/localtime:/etc/localtime:ro #Sync timezone with host    
-        env_file:
-        - .env
         restart: unless-stopped
 
     # portainer_agent:
