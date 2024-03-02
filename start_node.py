@@ -12,6 +12,7 @@
 import json
 import time
 import random
+import logging
 from logging.config import dictConfig
 
 from mqtt_node_network.node import MQTTNode
@@ -19,6 +20,7 @@ from mqtt_node_network.metrics_gatherer import MQTTMetricsGatherer
 from mqtt_node_network.configuration import broker_config, logger_config, config
 from fast_database_clients import FastInfluxDBClient
 
+logger = logging.getLogger(__name__)
 NODE_ID = "gatherer_env_0"
 PROMETHEUS_ENABLE = config["mqtt"]["node_network"]["enable_prometheus_server"]
 PROMETHEUS_PORT = config["mqtt"]["node_network"]["prometheus_port"]
@@ -34,10 +36,10 @@ def start_prometheus_server(port=8000):
     from prometheus_client import start_http_server
 
     start_http_server(port)
-
-
+    
 def publish_forever():
     client = MQTTNode(broker_config=broker_config, node_id=NODE_ID).connect()
+    
     data = random.random()
     
     while True:
