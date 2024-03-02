@@ -26,6 +26,7 @@ classifiers = [
 dependencies = [
   "fast-database-clients @ git+https://github.com/generalmattza/fast-database-clients.git@v2.0.5",
   "mqtt-node-network @ git+https://github.com/generalmattza/mqtt-node-network.git",
+  "Adafruit_DHT>=1.4.0",
 ]
 
 [tool.setuptools]
