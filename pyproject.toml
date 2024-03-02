@@ -24,16 +24,8 @@ classifiers = [
 ]
 
 dependencies = [
-<<<<<<< HEAD
   "fast-database-clients @ git+https://github.com/generalmattza/fast-database-clients.git@v2.0.5",
   "mqtt-node-network @ git+https://github.com/generalmattza/mqtt-node-network.git",
-=======
-   "data-node-network @ git+https://github.com/davidson-engineering/data-node-network.git",
-   "tomli >= 2.0.1",
-   "python-dotenv >= 1.0.1",
-   "pms5003>=1.0.0",
-   "Adafruit_DHT>=1.4.0",
->>>>>>> 6dd7bb47fe2d2075056fa0d8ffc00abfce296878
 ]
 
 [tool.setuptools]
