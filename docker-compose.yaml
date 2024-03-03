@@ -4,38 +4,38 @@ services:
         build:
             context: .
         ports:
-        - "${HOSTNAME}:8000:8000/tcp" # for prometheus
+            - "${HOSTNAME}:8000:8000/tcp" # for prometheus
+            # - "1883:1883/tcp" # for mqtt
         image: gatherer-node:latest
         container_name: gatherer-node
         working_dir: /app
         command: [ "python", "start_node.py" ]
         # user: "1001"
         volumes:
-        - ./logs:/app/logs
-        - ./config:/app/config
-        - /etc/localtime:/etc/localtime:ro # sync timezone with host machine
+            - ./logs:/app/logs
+            - ./config:/app/config:ro
+            - /etc/localtime:/etc/localtime:ro # sync timezone with host machine
         restart: unless-stopped
-
-
-    promtail:
-        image: grafana/promtail:latest
-        container_name: promtail
-        volumes:
-        - /var/log:/var/log
-        - ./config:/etc/promtail:ro
-        command: 
-        - "-config.expand-env=true"
-        - "-config.file=/etc/promtail/promtail.yaml"
-        restart: unless-stopped
-
-    telegraf:
-        image: telegraf:latest
-        container_name: telegraf
-        volumes:
-        # Mount for telegraf config
-        - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-        - /etc/localtime:/etc/localtime:ro #Sync timezone with host    
-        restart: unless-stopped
+        networks:
+            - mqtt5-network
+    # promtail:
+    #     image: grafana/promtail:latest
+    #     container_name: promtail
+    #     volumes:
+    #         # - /var/log:/var/log
+    #         - ./config:/etc/promtail:ro
+    #     command:
+    #         - "-config.expand-env=true"
+    #         - "-config.file=/etc/promtail/promtail.yaml"
+    #     restart: unless-stopped
+    # telegraf:
+    #     image: telegraf:latest
+    #     container_name: telegraf
+    #     volumes:
+    #     # Mount for telegraf config
+    #     - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    #     - /etc/localtime:/etc/localtime:ro #Sync timezone with host    
+    #     restart: unless-stopped
 
     # portainer_agent:
     #     # Use the portainer/agent Docker image
@@ -50,4 +50,7 @@ services:
     #     # ports:
     #     # - "9001:9001"
     #     network_mode: "host"
-          
+
+networks:
+    mqtt5-network:
+        external: true

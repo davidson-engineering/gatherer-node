@@ -1,0 +1,21 @@
+secrets_filepath = ".env"
+
+[mqtt.broker]
+hostname = "pi-monitor.local"
+port = 1_883
+
+[mqtt.node_network]
+enable_prometheus_server = true
+prometheus_port = 8_001
+
+[mqtt.node]
+node_id = "node-0"
+subscribe_topics = [
+  "+/metrics/#",
+]
+publish_root_topic = "metrics"
+publish_period = 1
+measurement_id = "workshop"
+
+[influxdb]
+config_filepath = "config/.influxdb.toml"
