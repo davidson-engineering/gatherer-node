@@ -1,5 +1,5 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3.10-alpine
+FROM python:3.12-alpine
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -18,7 +18,6 @@ COPY ./ ./app
 WORKDIR /app
 RUN pip install .
 RUN pip install Adafruit_Python_DHT --config-setting="--build-option=--force-pi"
-# RUN mkdir /app/logs
 
 # # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
