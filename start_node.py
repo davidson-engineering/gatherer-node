@@ -11,12 +11,11 @@
 
 import json
 import time
-import random
 import logging
 from logging.config import dictConfig
 
 from mqtt_node_network.node import MQTTNode
-from mqtt_node_network.config import broker_config, logger_config, config
+from mqtt_node_network.configure import broker_config, logger_config, config
 from sensor_library.dht import SensorDHT11
 
 logger = logging.getLogger(__name__)
