@@ -16,7 +16,7 @@ from logging.config import dictConfig
 
 from mqtt_node_network.node import MQTTNode
 from mqtt_node_network.configure import broker_config, logger_config, config
-from sensor_library.dht import SensorDHT11
+from sensor_library.aht import SensorAHT20
 
 logger = logging.getLogger(__name__)
 
@@ -27,7 +27,6 @@ PUBLISH_ROOT_TOPIC = config["mqtt"]["node"]["publish_root_topic"]
 PUBLISH_TOPIC = f"{NODE_ID}/{PUBLISH_ROOT_TOPIC}/{MEASUREMENT}"
 PROMETHEUS_ENABLE = config["mqtt"]["node_network"]["enable_prometheus_server"]
 PROMETHEUS_PORT = config["mqtt"]["node_network"]["prometheus_port"]
-SENSOR_PIN = 18
 
 
 def setup_logging(logger_config):
@@ -46,16 +45,10 @@ def start_prometheus_server(port=8000):
 def gather_data():
     node = MQTTNode(broker_config=broker_config, node_id=NODE_ID).connect()
 
-    sensor = SensorDHT11(pin=SENSOR_PIN)
+    sensor = SensorAHT20()
 
     while True:
-        data = {
-            "measurement": MEASUREMENT,
-            "fields": sensor.read(),
-            "time": time.time(),
-            "tags": {"node_id": node.node_id},
-        }
-        payload = json.dumps(data)
+        payload = sensor.measure()
         node.publish(topic=PUBLISH_TOPIC, payload=payload)
         time.sleep(PUBLISH_PERIOD)
 
