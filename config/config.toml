@@ -10,7 +10,7 @@ prometheus_port = 8_001
 
 [mqtt.node]
 node_id = "gatherer-node-0"
-subscribe_topics = [
+subscribe_topic = [
   "metrics/#",
 ]
 publish_topic = "metrics/gatherer-node-0/environment"
