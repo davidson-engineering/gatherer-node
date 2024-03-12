@@ -8,8 +8,6 @@
 """A node to gather data from a sensor, and publish it to an MQTT broker."""
 # ---------------------------------------------------------------------------
 
-
-import json
 import time
 import logging
 from logging.config import dictConfig
@@ -20,11 +18,9 @@ from sensor_library.aht import SensorAHT20
 
 logger = logging.getLogger(__name__)
 
-NODE_ID = "metrics_client_0"
+NODE_ID = config["mqtt"]["node"]["node_id"]
 PUBLISH_PERIOD = config["mqtt"]["node"]["publish_period"]
-MEASUREMENT = config["mqtt"]["node"]["measurement_id"]
-PUBLISH_ROOT_TOPIC = config["mqtt"]["node"]["publish_root_topic"]
-PUBLISH_TOPIC = f"{NODE_ID}/{PUBLISH_ROOT_TOPIC}/{MEASUREMENT}"
+PUBLISH_TOPIC = config["mqtt"]["node"]["publish_topic"]
 PROMETHEUS_ENABLE = config["mqtt"]["node_network"]["enable_prometheus_server"]
 PROMETHEUS_PORT = config["mqtt"]["node_network"]["prometheus_port"]
 
@@ -49,7 +45,10 @@ def gather_data():
 
     while True:
         payload = sensor.measure()
-        node.publish(topic=PUBLISH_TOPIC, payload=payload)
+        node.publish(
+            topic=f"{PUBLISH_TOPIC}/temperature", payload=payload["temperature"]
+        )
+        node.publish(topic=f"{PUBLISH_TOPIC}/humidity", payload=payload["humidity"])
         time.sleep(PUBLISH_PERIOD)
 
 
