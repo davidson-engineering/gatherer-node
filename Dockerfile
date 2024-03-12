@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Install git
 RUN apk add --no-cache git
-RUN apk add g++
+# RUN apk add g++
 # Update pip
 RUN python -m pip install --upgrade pip
 
@@ -17,7 +17,6 @@ RUN python -m pip install --upgrade pip
 COPY ./ ./app
 WORKDIR /app
 RUN pip install .
-RUN pip install Adafruit_Python_DHT --config-setting="--build-option=--force-pi"
 
 # # Creates a non-root user with an explicit UID and adds permission to access the /app folder
 # # For more info, please refer to https://aka.ms/vscode-docker-python-configure-containers
