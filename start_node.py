@@ -22,7 +22,7 @@ NODE_ID = config["mqtt"]["node"]["node_id"]
 SUBSCRIBE_TOPIC = config["mqtt"]["node"]["subscribe_topic"]
 PROMETHEUS_ENABLE = config["mqtt"]["node_network"]["enable_prometheus_server"]
 PROMETHEUS_PORT = config["mqtt"]["node_network"]["prometheus_port"]
-DATABASE_CONFIG = config["mqtt"]["influxdb"]["config_filepath"]
+DATABASE_CONFIG = config["influxdb"]["config_filepath"]
 
 
 def setup_logging(logger_config):
