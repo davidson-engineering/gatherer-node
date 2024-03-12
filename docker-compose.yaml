@@ -4,7 +4,9 @@ services:
         ports:
             - "${HOSTNAME}:8000:8000/tcp" # for prometheus
             - "${HOSTNAME}:1883:1883/tcp" # for mqtt
-        image: mattza85/gatherer-node:latest
+        build:
+            context: .
+            dockerfile: Dockerfile
         container_name: gatherer-node
         working_dir: /app
         command: [ "python", "start_node.py" ]
