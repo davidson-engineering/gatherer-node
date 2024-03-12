@@ -1,9 +1,9 @@
 secrets_filepath = ".env"
-[node_network]
-read_limit = 1_000 # Security feature
 
-[node_network.server]
-prometheus_port = 8_000
+[mqtt.broker]
+hostname = "pi-monitor.local"
+port = 1_883
 
-[node_network.client]
-prometheus_port = 8_000
+[mqtt.node_network]
+enable_prometheus_server = true
+prometheus_port = 8_001

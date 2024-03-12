@@ -21,7 +21,7 @@ from mqtt_node_network.configuration import broker_config, logger_config, config
 from fast_database_clients import FastInfluxDBClient
 
 logger = logging.getLogger(__name__)
-NODE_ID = "gatherer_env_0"
+NODE_ID = "metrics_client_0"
 PROMETHEUS_ENABLE = config["mqtt"]["node_network"]["enable_prometheus_server"]
 PROMETHEUS_PORT = config["mqtt"]["node_network"]["prometheus_port"]
 
@@ -54,7 +54,7 @@ def publish_forever():
         time.sleep(0)
 
 
-def gather_forever(topics=("+/metric", 0)):
+def gather_forever(topic="+/metric", qos=0):
     config_file = "config/.influx_live.toml"
     database_client = FastInfluxDBClient.from_config_file(config_file=config_file)
     database_client.start()
@@ -62,7 +62,7 @@ def gather_forever(topics=("+/metric", 0)):
     client = MQTTMetricsGatherer(
         broker_config=broker_config, node_id=NODE_ID, buffer=database_client.buffer
     ).connect()
-    client.subscribe(topics)
+    client.subscribe(topic, qos)˜
     client.loop_forever()
 
 
@@ -70,5 +70,5 @@ if __name__ == "__main__":
     setup_logging(logger_config)
     if PROMETHEUS_ENABLE:
         start_prometheus_server(PROMETHEUS_PORT)
-    # gather_forever()
-    publish_forever()
+    gather_forever()
+    # publish_forever()

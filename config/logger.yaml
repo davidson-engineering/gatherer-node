@@ -7,20 +7,20 @@ handlers:
     level   : INFO
     # filters: [allow_foo]
     stream  : ext://sys.stdout
-  node_server_file:
+  mqtt_node_network.debug:
     class : logging.handlers.RotatingFileHandler
     formatter: json
     level   : DEBUG
-    filename: logs/node_server.log
-    maxBytes: 1_000_000
-    backupCount: 3
-  node_client_file:
+    filename: logs/mqtt_node_network.debug.log
+    maxBytes: 10_000_000
+    backupCount: 7
+  mqtt_node_network.info:
     class : logging.handlers.RotatingFileHandler
     formatter: json
-    level   : DEBUG
-    filename: logs/node_client.log
-    maxBytes: 1_000_000
-    backupCount: 3
+    level   : INFO
+    filename: logs/mqtt_node_network.info.log
+    maxBytes: 10_000_000
+    backupCount: 7
 
 
 formatters:
@@ -34,13 +34,9 @@ formatters:
     format: '%(asctime)s %(levelname)s %(message)s'
 
 loggers:
-  data_node_network.server:
+  mqtt_node_network:
     level: DEBUG
     handlers:
       - console
-      - node_server_file
-  data_node_network.client:
-    level: DEBUG
-    handlers:
-      - console
-      - node_client_file
+      - mqtt_node_network.info
+      - mqtt_node_network.debug
