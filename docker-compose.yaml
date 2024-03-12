@@ -3,7 +3,6 @@ services:
     gatherer-node:
         ports:
             - "${HOSTNAME}:8000:8000/tcp" # for prometheus
-            - "${HOSTNAME}:1883:1883/tcp" # for mqtt
         build:
             context: .
             dockerfile: Dockerfile
@@ -29,30 +28,29 @@ services:
             - "-config.expand-env=true"
             - "-config.file=/etc/promtail/promtail.yaml"
         restart: unless-stopped
+    # telegraf:
+    #     image: telegraf:latest
+    #     container_name: telegraf
+    #     volumes:
+    #         # Mount for telegraf config
+    #         - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+    #         - /etc/localtime:/etc/localtime:ro #Sync timezone with host    
+    #     restart: unless-stopped
 
-    telegraf:
-        image: telegraf:latest
-        container_name: telegraf
-        volumes:
-            # Mount for telegraf config
-            - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-            - /etc/localtime:/etc/localtime:ro #Sync timezone with host    
-        restart: unless-stopped
-
-    portainer_agent:
-        # Use the portainer/agent Docker image
-        image: portainer/agent:latest
-        container_name: portainer_agent
-        volumes:
-            # Mount the host's Docker socket into the container
-            - /var/run/docker.sock:/var/run/docker.sock
-            # Mount the host's Docker volumes into the container
-            - /var/lib/docker/volumes:/var/lib/docker/volumes
-        restart: unless-stopped
-        # ports:
-        # - "9001:9001"
-        network_mode: "host"
+    # portainer_agent:
+    #     # Use the portainer/agent Docker image
+    #     image: portainer/agent:latest
+    #     container_name: portainer_agent
+    #     volumes:
+    #         # Mount the host's Docker socket into the container
+    #         - /var/run/docker.sock:/var/run/docker.sock
+    #         # Mount the host's Docker volumes into the container
+    #         - /var/lib/docker/volumes:/var/lib/docker/volumes
+    #     restart: unless-stopped
+    #     # ports:
+    #     # - "9001:9001"
+    #     network_mode: "host"
 
 networks:
     mqtt5-network:
-        driver: bridge
+        external: true
