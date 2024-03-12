@@ -24,6 +24,7 @@ PROMETHEUS_ENABLE = config["mqtt"]["node_network"]["enable_prometheus_server"]
 PROMETHEUS_PORT = config["mqtt"]["node_network"]["prometheus_port"]
 DATABASE_CONFIG = config["mqtt"]["influxdb"]["config_filepath"]
 
+
 def setup_logging(logger_config):
     from pathlib import Path
 
@@ -35,7 +36,8 @@ def start_prometheus_server(port=8000):
     from prometheus_client import start_http_server
 
     start_http_server(port)
-    
+
+
 def subscribe_forever(topic="+/metric", qos=0):
     database_client = FastInfluxDBClient.from_config_file(config_file=DATABASE_CONFIG)
     database_client.start()
@@ -43,7 +45,7 @@ def subscribe_forever(topic="+/metric", qos=0):
     client = MQTTMetricsGatherer(
         broker_config=broker_config, node_id=NODE_ID, buffer=database_client.buffer
     ).connect()
-    client.subscribe(topic, qos)˜
+    client.subscribe(topic, qos)
     client.loop_forever()
 
 
