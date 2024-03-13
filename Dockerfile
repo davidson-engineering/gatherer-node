@@ -9,7 +9,7 @@ ENV PYTHONUNBUFFERED=1
 
 # Install git
 RUN apk add --no-cache git
-RUN apk add g++
+# RUN apk add g++
 # Update pip
 RUN python -m pip install --upgrade pip
 
