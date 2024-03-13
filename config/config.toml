@@ -5,12 +5,12 @@ hostname = "pi-monitor.local"
 port = 1_883
 
 [mqtt.node_network]
-enable_prometheus_server = true
+enable_prometheus_server = false
 prometheus_port = 8_001
 topic_structure = "category/node_id/measurement/field*"
 
 [mqtt.node]
-node_id = "gatherer-node-0"
+node_id = "gatherer-node-1"
 subscribe_topic = [
   "metrics/#",
 ]

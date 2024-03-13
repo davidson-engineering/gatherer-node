@@ -13,7 +13,7 @@ import logging
 from logging.config import dictConfig
 
 from mqtt_node_network.metrics_gatherer import MQTTMetricsGatherer
-from mqtt_node_network.configuration import broker_config, logger_config, config
+from mqtt_node_network.configure import broker_config, logger_config, config
 from fast_database_clients import FastInfluxDBClient
 
 logger = logging.getLogger(__name__)
@@ -53,4 +53,4 @@ if __name__ == "__main__":
     setup_logging(logger_config)
     if PROMETHEUS_ENABLE:
         start_prometheus_server(PROMETHEUS_PORT)
-    subscribe_forever()
+    subscribe_forever(SUBSCRIBE_TOPIC)

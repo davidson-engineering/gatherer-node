@@ -17,7 +17,6 @@ services:
         restart: unless-stopped
         networks:
             - mqtt5-network
-
     promtail:
         image: grafana/promtail:latest
         container_name: promtail
