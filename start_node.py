@@ -13,23 +13,19 @@ import logging
 from logging.config import dictConfig
 
 from mqtt_node_network.node import MQTTNode
-from mqtt_node_network.configure import broker_config, logger_config, config
+from mqtt_node_network.initialize import initialize
 from sensor_library.aht import SensorAHT20
 
 logger = logging.getLogger(__name__)
 
-NODE_ID = config["mqtt"]["node"]["node_id"]
-PUBLISH_PERIOD = config["mqtt"]["node"]["publish_period"]
-PUBLISH_TOPIC = config["mqtt"]["node"]["publish_topic"]
+config = initialize(config="config/config.toml", secrets=".env", logger="config/logger.yaml")
+
+NODE_ID = config["mqtt"]["client"]["node_id"]
+PUBLISH_TOPIC = f"{NODE_ID}/environment/bedroom"
 PROMETHEUS_ENABLE = config["mqtt"]["node_network"]["enable_prometheus_server"]
 PROMETHEUS_PORT = config["mqtt"]["node_network"]["prometheus_port"]
-
-
-def setup_logging(logger_config):
-    from pathlib import Path
-
-    Path.mkdir(Path("logs"), exist_ok=True)
-    return dictConfig(logger_config)
+BROKER_CONFIG = config["mqtt"]["broker"]
+PUBLISH_PERIOD = 10
 
 
 def start_prometheus_server(port=8000):
@@ -39,21 +35,23 @@ def start_prometheus_server(port=8000):
 
 
 def gather_data():
-    node = MQTTNode(broker_config=broker_config, node_id=NODE_ID).connect()
+
+    node = MQTTNode(broker_config=BROKER_CONFIG, node_id=NODE_ID).connect()
 
     sensor = SensorAHT20()
 
     while True:
         payload = sensor.measure()
+        temperature = round(payload["temperature"], 3)
+        humidity = round(payload["humidity"], 3)
         node.publish(
-            topic=f"{PUBLISH_TOPIC}/temperature", payload=payload["temperature"]
+            topic=f"{PUBLISH_TOPIC}/temperature", payload=temperature
         )
-        node.publish(topic=f"{PUBLISH_TOPIC}/humidity", payload=payload["humidity"])
+        node.publish(topic=f"{PUBLISH_TOPIC}/humidity", payload=humidity)
         time.sleep(PUBLISH_PERIOD)
 
 
 if __name__ == "__main__":
-    setup_logging(logger_config)
     if PROMETHEUS_ENABLE:
         start_prometheus_server(PROMETHEUS_PORT)
     gather_data()
