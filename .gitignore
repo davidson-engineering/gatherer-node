@@ -160,3 +160,8 @@ cython_debug/
 #.idea/
 #config/.*
 #.*
+#
+#
+.*
+logs/*
+
