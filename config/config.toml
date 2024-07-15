@@ -11,4 +11,4 @@ enable_prometheus_server = false
 prometheus_port = 8_000
 
 [mqtt.client]
-node_id = "environment-node-1"
+node_id = "environment-node-2"

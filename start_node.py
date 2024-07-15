@@ -21,7 +21,7 @@ logger = logging.getLogger(__name__)
 config = initialize(config="config/config.toml", secrets=".env", logger="config/logger.yaml")
 
 NODE_ID = config["mqtt"]["client"]["node_id"]
-PUBLISH_TOPIC = f"{NODE_ID}/environment/bedroom"
+PUBLISH_TOPIC = f"{NODE_ID}/environment/bedroom22"
 PROMETHEUS_ENABLE = config["mqtt"]["node_network"]["enable_prometheus_server"]
 PROMETHEUS_PORT = config["mqtt"]["node_network"]["prometheus_port"]
 BROKER_CONFIG = config["mqtt"]["broker"]

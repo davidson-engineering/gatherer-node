@@ -29,15 +29,15 @@ services:
 #            - "-config.file=/etc/promtail/promtail.yaml"
 #        restart: unless-stopped
 
-    telegraf:
-        image: telegraf:latest
-        container_name: telegraf
-        volumes:
-            # Mount for telegraf config
-            - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
-            - /etc/localtime:/etc/localtime:ro #Sync timezone with host    
-        restart: unless-stopped
-        env_file: .env
+#   telegraf:
+#       image: telegraf:latest
+#       container_name: telegraf
+#       volumes:
+#            # Mount for telegraf config
+#            - ./config/telegraf.conf:/etc/telegraf/telegraf.conf:ro
+#            - /etc/localtime:/etc/localtime:ro #Sync timezone with host    
+#        restart: unless-stopped
+#        env_file: .env
 
 #    portainer_agent:
 #        # Use the portainer/agent Docker image

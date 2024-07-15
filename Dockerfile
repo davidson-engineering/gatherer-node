@@ -1,5 +1,6 @@
 # For more information, please refer to https://aka.ms/vscode-docker-python
-FROM python:3-slim
+#FROM python:3-slim
+FROM python:3
 
 # Keeps Python from generating .pyc files in the container
 ENV PYTHONDONTWRITEBYTECODE=1
@@ -8,8 +9,10 @@ ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
 # Install required packages
-RUN apt-get update && apt-get upgrade -y
-RUN apt-get install git g++ -y
+#RUN apt-get update && apt-get upgrade -y
+#RUN apt-get install git g++ -y
+RUN apt-get install cmake -y
+#RUN apt-get install ninja-build -y
 
 # Update pip
 RUN python -m pip install --upgrade pip
